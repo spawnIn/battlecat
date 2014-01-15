@@ -1,0 +1,27 @@
+allprojects {
+	apply plugin: 'eclipse'
+	apply plugin: 'idea'
+
+}
+
+subprojects {
+	apply plugin: 'java'
+	
+	group = 'com.spawnin.battlecat'
+	version = '1.0'
+	sourceCompatibility = 1.7
+	
+    repositories {
+       mavenCentral()
+    }
+
+    dependencies {
+        testCompile 'junit:junit:4.8.2'
+    }
+
+	jar {
+	    manifest {
+	        attributes 'Implementation-Title': 'SpawnIn Battlecat', 'Implementation-Version': version
+	    }
+	}
+}
