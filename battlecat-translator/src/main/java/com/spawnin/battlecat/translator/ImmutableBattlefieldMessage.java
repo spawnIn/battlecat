@@ -15,8 +15,6 @@
  */
 package com.spawnin.battlecat.translator;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import java.util.List;
 
 /**
@@ -24,24 +22,26 @@ import java.util.List;
  *
  * @author Patrick Sy (patrick.sy@get-it.us)
  */
-public class MutableBattlefieldMessage implements BattlefieldMessage {
+class ImmutableBattlefieldMessage implements BattlefieldMessage {
 
-    private Integer id;
+    private final Integer id;
 
-    private List<String> words;
+    private final List<String> words;
 
-    private MessageType type;
+    private final MessageType type;
 
-    private OriginType origin;
+    private final OriginType origin;
 
+    ImmutableBattlefieldMessage(Integer id, List<String> words, MessageType type, OriginType origin) {
+        this.id = id;
+        this.words = words;
+        this.type = type;
+        this.origin = origin;
+    }
 
     @Override
     public Integer getId() {
         return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     @Override
@@ -49,30 +49,13 @@ public class MutableBattlefieldMessage implements BattlefieldMessage {
         return words;
     }
 
-    public void setWords(List<String> words) {
-        this.words = words;
-    }
-
     @Override
     public MessageType getType() {
         return type;
     }
 
-    public void setType(MessageType type) {
-        this.type = type;
-    }
-
     @Override
     public OriginType getOrigin() {
         return origin;
-    }
-
-    public void setOrigin(OriginType origin) {
-        this.origin = origin;
-    }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
     }
 }
