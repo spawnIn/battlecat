@@ -30,23 +30,24 @@ import java.util.List;
  */
 public class SimpleBf4MessageTranslator implements BattlefieldMessageTranslator {
 
+    private BattlefieldMessageBuilderFactory messageBuilderFactory;
 
     @Override
     public BattlefieldMessage decode(byte[] data) {
-        MutableBattlefieldMessage msg = new MutableBattlefieldMessage();
+        BattlefieldMessageBuilder msgBuilder = messageBuilderFactory.getBuilder();
 
         ByteBuffer byteBuffer = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN);
 
         // validate header
         int header = byteBuffer.getInt();
 
-        msg.setOrigin(OriginType.get(header));
-        msg.setType(MessageType.get(header));
+        msgBuilder.setOrigin(OriginType.get(header));
+        msgBuilder.setType(MessageType.get(header));
 
         int id = OriginType.resetBit(header);
         id = MessageType.resetBit(id);
 
-        msg.setId(id);
+        msgBuilder.setId(id);
 
         // packet size
         int packetSize = byteBuffer.getInt();
@@ -60,9 +61,9 @@ public class SimpleBf4MessageTranslator implements BattlefieldMessageTranslator 
         byte[] words = new byte[data.length - 12];
         byteBuffer.get(words, 0, words.length);
 
-        msg.setWords(decodeWords(numberOfWords, words));
+        msgBuilder.setWords(decodeWords(numberOfWords, words));
 
-        return msg;
+        return msgBuilder.build();
     }
 
     @Override
@@ -114,7 +115,7 @@ public class SimpleBf4MessageTranslator implements BattlefieldMessageTranslator 
 
         ByteBuffer byteBuffer = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN);
 
-        while(byteBuffer.hasRemaining() && wordsRead < numberOfWords) {
+        while (byteBuffer.hasRemaining() && wordsRead < numberOfWords) {
 
             int wordLength = byteBuffer.getInt();
 
@@ -144,7 +145,7 @@ public class SimpleBf4MessageTranslator implements BattlefieldMessageTranslator 
             byte[] chars = word.getBytes("US-ASCII");
             int size = chars.length;
 
-            return ByteBuffer.allocate(4 + size  + 1).order(ByteOrder.LITTLE_ENDIAN).putInt(size).put(chars).put((byte) 0).array();
+            return ByteBuffer.allocate(4 + size + 1).order(ByteOrder.LITTLE_ENDIAN).putInt(size).put(chars).put((byte) 0).array();
 
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException("Could not convert", e);
