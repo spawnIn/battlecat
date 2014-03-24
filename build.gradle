@@ -9,7 +9,7 @@ subprojects {
 	
 	group = 'com.spawnin.battlecat'
 	version = '1.0'
-	sourceCompatibility = 1.7
+	sourceCompatibility = 1.8
 	
     repositories {
        mavenCentral()
@@ -26,4 +26,8 @@ subprojects {
 	        attributes 'Implementation-Title': 'SpawnIn Battlecat', 'Implementation-Version': version
 	    }
 	}
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.11'
 }
