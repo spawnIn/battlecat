@@ -1,1 +1,19 @@
 
+dependencies {
+
+    compile project(':battlecat-translator')
+
+    compile group: 'org.springframework', name: 'spring-context', version: springVersion
+    compile group: 'org.springframework', name: 'spring-context-support', version: springVersion
+    compile group: 'org.springframework', name: 'spring-tx', version: springVersion
+
+    compile group: 'org.projectreactor', name: 'reactor-core', version: reactorVersion
+    compile group: 'org.projectreactor', name: 'reactor-spring', version: reactorVersion
+    compile group: 'org.projectreactor', name: 'reactor-tcp', version: reactorVersion
+
+    compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.1'
+    compile group: 'org.slf4j', name:'slf4j-api', version:'1.7.6'
+    compile group: 'ch.qos.logback', name:'logback-classic', version:'1.1.1'
+
+}

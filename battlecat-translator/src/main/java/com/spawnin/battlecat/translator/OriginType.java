@@ -53,6 +53,7 @@ public enum OriginType {
         return data &= ~(1 << BIT);
     }
 
+    // TODO Refactor
     public static OriginType get(int data) {
         int value = (data >> BIT) & 1;
 

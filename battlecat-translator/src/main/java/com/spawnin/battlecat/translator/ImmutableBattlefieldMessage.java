@@ -15,10 +15,12 @@
  */
 package com.spawnin.battlecat.translator;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import java.util.List;
 
 /**
- * TODO: Comment
+ * Immutable implementation of {@link com.spawnin.battlecat.translator.BattlefieldMessage}
  *
  * @author Patrick Sy (patrick.sy@get-it.us)
  */
@@ -57,5 +59,15 @@ class ImmutableBattlefieldMessage implements BattlefieldMessage {
     @Override
     public OriginType getOrigin() {
         return origin;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("id", id)
+                .append("words", words)
+                .append("type", type)
+                .append("origin", origin)
+                .toString();
     }
 }

@@ -28,6 +28,14 @@ subprojects {
 	}
 }
 
+ext {
+    springVersion = '4.0.2.RELEASE'
+
+    reactorVersion = '1.0.1.RELEASE'
+
+    tomcatVersion = '7.0.50'
+}
+
 task wrapper(type: Wrapper) {
     gradleVersion = '1.11'
 }

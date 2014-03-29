@@ -24,13 +24,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * TODO: Comment
+ * Decodes and encodes {@link com.spawnin.battlecat.translator.BattlefieldMessage}s from byte data
  *
  * @author Patrick Sy (patrick.sy@get-it.us)
  */
 public class SimpleBf4MessageTranslator implements BattlefieldMessageTranslator {
 
-    private BattlefieldMessageBuilderFactory messageBuilderFactory;
+    private final BattlefieldMessageBuilderFactory messageBuilderFactory;
+
+    public SimpleBf4MessageTranslator(BattlefieldMessageBuilderFactory factory) {
+
+        this.messageBuilderFactory = factory;
+
+    }
 
     @Override
     public BattlefieldMessage decode(byte[] data) {
@@ -56,8 +62,6 @@ public class SimpleBf4MessageTranslator implements BattlefieldMessageTranslator 
         int numberOfWords = byteBuffer.getInt();
 
         // decode words
-
-
         byte[] words = new byte[data.length - 12];
         byteBuffer.get(words, 0, words.length);
 

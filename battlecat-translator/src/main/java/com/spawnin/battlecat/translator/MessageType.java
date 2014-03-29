@@ -54,7 +54,7 @@ public enum MessageType {
         return data &= ~(1 << BIT);
     }
 
-
+    // TODO Refactor
     public static MessageType get(int data) {
         int value = (data >> BIT) & 1;
 
