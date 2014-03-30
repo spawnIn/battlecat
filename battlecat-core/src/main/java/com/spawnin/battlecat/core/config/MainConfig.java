@@ -20,6 +20,7 @@ import com.spawnin.battlecat.translator.SimpleBattleFieldMessageBuilderFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.PropertySource;
 import reactor.spring.context.config.EnableReactor;
 
 /**
@@ -30,12 +31,13 @@ import reactor.spring.context.config.EnableReactor;
 @Configuration
 @EnableReactor
 @Import({ReactorConfig.class, NetworkConfig.class})
+@PropertySource("classpath:/default-application.properties")
+@PropertySource(value = "classpath:/application.properties", ignoreResourceNotFound = true)
 public class MainConfig {
 
     @Bean
     public BattlefieldMessageBuilderFactory battlefieldMessageBuilderFactory() {
         return new SimpleBattleFieldMessageBuilderFactory();
     }
-
 
 }

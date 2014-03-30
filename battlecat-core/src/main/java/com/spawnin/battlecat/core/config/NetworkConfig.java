@@ -31,7 +31,7 @@ import reactor.tcp.netty.NettyTcpClient;
 import reactor.tcp.spec.TcpClientSpec;
 
 /**
- * TODO: Comment
+ * Spring JavaConfig for networking related objects and components
  *
  * @author Patrick Sy (patrick.sy@get-it.us)
  */
@@ -39,14 +39,19 @@ import reactor.tcp.spec.TcpClientSpec;
 public class NetworkConfig {
 
     @Autowired
+    private org.springframework.core.env.Environment springEnv;
+
+    @Autowired
     private BattlefieldMessageBuilderFactory battlefieldMessageBuilderFactory;
 
     @Bean
     public TcpClient<BattlefieldMessage, BattlefieldMessage> serverClient(Environment env) {
-        // TODO load data from config file
-        return new TcpClientSpec<BattlefieldMessage, BattlefieldMessage>(NettyTcpClient.class).env(env).
-                codec(battlefieldMessageCodec()).connect("", 10301).get();
 
+        String host = springEnv.getRequiredProperty("battlecat.battlefield.server.host");
+        int port = springEnv.getRequiredProperty("battlecat.battlefield.server.port", Integer.class);
+
+        return new TcpClientSpec<BattlefieldMessage, BattlefieldMessage>(NettyTcpClient.class).env(env).
+                codec(battlefieldMessageCodec()).connect(host, port).get();
     }
 
     @Bean
