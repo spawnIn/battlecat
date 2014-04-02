@@ -39,11 +39,6 @@ public class ByTypeSelector implements Selector {
 
 
     @Override
-    public UUID getId() {
-        return uuid;
-    }
-
-    @Override
     public Object getObject() {
         return type;
     }

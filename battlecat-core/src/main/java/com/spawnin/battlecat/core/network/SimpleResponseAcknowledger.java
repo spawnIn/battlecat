@@ -23,7 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.Reactor;
 import reactor.event.Event;
-import reactor.spring.annotation.Selector;
+import reactor.spring.context.annotation.Selector;
 
 /**
  * Responds to events from the server with a simple OK message and the same ID

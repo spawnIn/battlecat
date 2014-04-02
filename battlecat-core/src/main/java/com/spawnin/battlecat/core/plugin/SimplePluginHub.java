@@ -18,7 +18,7 @@ package com.spawnin.battlecat.core.plugin;
 import com.spawnin.battlecat.translator.BattlefieldMessage;
 import reactor.core.Reactor;
 import reactor.event.Event;
-import reactor.spring.annotation.Selector;
+import reactor.spring.context.annotation.Selector;
 
 /**
  * Forwards incoming events to the plugin reactor. It uses the command/first word

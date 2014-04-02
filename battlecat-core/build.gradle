@@ -8,8 +8,10 @@ dependencies {
     compile group: 'org.springframework', name: 'spring-tx', version: springVersion
 
     compile group: 'org.projectreactor', name: 'reactor-core', version: reactorVersion
-    compile group: 'org.projectreactor', name: 'reactor-spring', version: reactorVersion
-    compile group: 'org.projectreactor', name: 'reactor-tcp', version: reactorVersion
+    compile group: 'org.projectreactor', name: 'reactor-net', version: reactorVersion
+
+    compile group: 'org.projectreactor.spring', name: 'reactor-spring-core', version: reactorVersion
+    compile group: 'org.projectreactor.spring', name: 'reactor-spring-context', version: reactorVersion
 
     compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.1'

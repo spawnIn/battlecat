@@ -19,7 +19,7 @@ import com.spawnin.battlecat.translator.BattlefieldMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.event.Event;
-import reactor.spring.annotation.Selector;
+import reactor.spring.context.annotation.Selector;
 
 /**
  * TODO: Comment

@@ -24,9 +24,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import reactor.core.Reactor;
 import reactor.core.composable.Stream;
 import reactor.event.Event;
-import reactor.tcp.Reconnect;
-import reactor.tcp.TcpClient;
-import reactor.tcp.TcpConnection;
+import reactor.net.NetChannel;
+import reactor.net.Reconnect;
+import reactor.net.tcp.TcpClient;
 import reactor.tuple.Tuple;
 
 /**
@@ -57,11 +57,13 @@ public class ServerConnectionManager {
 
     public void connect() {
 
-        Stream<TcpConnection<BattlefieldMessage, BattlefieldMessage>> connections = tcpClient.open((address, attempt) -> {
+        Stream<NetChannel<BattlefieldMessage, BattlefieldMessage>> connections = tcpClient.open((address, attempt) -> {
             return Tuple.of(address, 8080L);
         });
 
         connections.consume(connection -> {
+            LOGGER.debug("Initializing new connection {}", connection);
+
             connection.in().consume(message -> {
                 LOGGER.debug("Passing incoming message {}", message);
                 inReactor.notify("incoming", Event.wrap(message));

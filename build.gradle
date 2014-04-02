@@ -13,6 +13,7 @@ subprojects {
 	
     repositories {
        mavenCentral()
+       maven { url 'http://repo.springsource.org/libs-milestone' }
     }
 
     dependencies {
@@ -29,9 +30,9 @@ subprojects {
 }
 
 ext {
-    springVersion = '4.0.2.RELEASE'
+    springVersion = '4.0.3.RELEASE'
 
-    reactorVersion = '1.0.1.RELEASE'
+    reactorVersion = '1.1.0.M3'
 
     tomcatVersion = '7.0.50'
 }

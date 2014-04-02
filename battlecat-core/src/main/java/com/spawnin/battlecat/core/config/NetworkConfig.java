@@ -26,9 +26,9 @@ import org.springframework.context.annotation.Configuration;
 import reactor.core.Environment;
 import reactor.core.Reactor;
 import reactor.core.spec.Reactors;
-import reactor.tcp.TcpClient;
-import reactor.tcp.netty.NettyTcpClient;
-import reactor.tcp.spec.TcpClientSpec;
+import reactor.net.netty.tcp.NettyTcpClient;
+import reactor.net.tcp.TcpClient;
+import reactor.net.tcp.spec.TcpClientSpec;
 
 /**
  * Spring JavaConfig for networking related objects and components
