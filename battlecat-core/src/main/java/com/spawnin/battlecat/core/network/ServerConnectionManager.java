@@ -15,19 +15,16 @@
  */
 package com.spawnin.battlecat.core.network;
 
-import com.spawnin.battlecat.core.selectors.ByTypeSelector;
 import com.spawnin.battlecat.translator.BattlefieldMessage;
-import com.spawnin.battlecat.translator.BattlefieldMessageBuilderFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import reactor.core.Reactor;
 import reactor.core.composable.Stream;
-import reactor.event.Event;
 import reactor.net.NetChannel;
 import reactor.net.Reconnect;
 import reactor.net.tcp.TcpClient;
 import reactor.tuple.Tuple;
+
+import java.util.List;
 
 /**
  * TODO: Comment
@@ -42,17 +39,13 @@ public class ServerConnectionManager {
 
     private final Reconnect reconnectStrategy;
 
-    @Autowired
-    private BattlefieldMessageBuilderFactory factory;
+    private final List<ConnectionInitializer> connectionInitializers;
 
-    private final Reactor outReactor;
-    private final Reactor inReactor;
 
-    public ServerConnectionManager(TcpClient<BattlefieldMessage, BattlefieldMessage> tcpClient, Reconnect reconnectStrategy, Reactor outReactor, Reactor inReactor) {
+    public ServerConnectionManager(TcpClient<BattlefieldMessage, BattlefieldMessage> tcpClient, Reconnect reconnectStrategy, List<ConnectionInitializer> connectionInitializers) {
         this.tcpClient = tcpClient;
         this.reconnectStrategy = reconnectStrategy;
-        this.outReactor = outReactor;
-        this.inReactor = inReactor;
+        this.connectionInitializers = connectionInitializers;
     }
 
     public void connect() {
@@ -64,20 +57,14 @@ public class ServerConnectionManager {
         connections.consume(connection -> {
             LOGGER.debug("Initializing new connection {}", connection);
 
-            connection.in().consume(message -> {
-                LOGGER.debug("Passing incoming message {}", message);
-                inReactor.notify("incoming", Event.wrap(message));
-            });
+            for (ConnectionInitializer initializer : connectionInitializers) {
 
-            outReactor.getConsumerRegistry().unregister(new Object());
+                LOGGER.debug("Initializing new connection {} with connection intializer {}", connection, initializer);
+                initializer.initialize(connection);
 
-            outReactor.on(new ByTypeSelector(Object.class), (Event<BattlefieldMessage> event) -> {
-                LOGGER.debug("Passing outgoing message {}", event.getData());
-                connection.out().accept(event.getData());
-            });
+            }
 
         });
-
 
 
     }

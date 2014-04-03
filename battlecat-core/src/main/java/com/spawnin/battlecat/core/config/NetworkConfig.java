@@ -30,6 +30,9 @@ import reactor.net.netty.tcp.NettyTcpClient;
 import reactor.net.tcp.TcpClient;
 import reactor.net.tcp.spec.TcpClientSpec;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Spring JavaConfig for networking related objects and components
  *
@@ -68,7 +71,7 @@ public class NetworkConfig {
     public ServerConnectionManager serverConnectionManager(Environment env) {
 
         return new ServerConnectionManager(serverClient(env), null,
-                outgoingMessageReactor(env), incomingMessageReactor(env));
+                null);
 
     }
 
@@ -80,6 +83,20 @@ public class NetworkConfig {
     @Bean
     public Reactor outgoingMessageReactor(Environment env) {
         return Reactors.reactor(env);
+    }
+
+    @Bean
+    public List<ConnectionInitializer> connectionInitializers(Environment env) {
+        List<ConnectionInitializer> connectionInitializers = new ArrayList<>();
+
+        connectionInitializers.add(inputOutputConnectionInitializer(env));
+
+        return connectionInitializers;
+    }
+
+    @Bean
+    public ConnectionInitializer inputOutputConnectionInitializer(Environment env) {
+        return new InputOutputConnectionInitializer(incomingMessageReactor(env), outgoingMessageReactor(env));
     }
 
     @Bean
