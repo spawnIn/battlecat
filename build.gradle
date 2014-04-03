@@ -12,8 +12,11 @@ subprojects {
 	sourceCompatibility = 1.8
 	
     repositories {
-       mavenCentral()
-       maven { url 'http://repo.springsource.org/libs-milestone' }
+        //mavenLocal()
+        mavenCentral()
+        maven { url 'http://repo.spring.io/libs-release' }
+        maven { url 'http://repo.springsource.org/libs-milestone' }
+        maven { url 'http://repo.springsource.org/libs-snapshot' }
     }
 
     dependencies {
@@ -32,7 +35,7 @@ subprojects {
 ext {
     springVersion = '4.0.3.RELEASE'
 
-    reactorVersion = '1.1.0.M3'
+    reactorVersion = '1.1.0.BUILD-SNAPSHOT'
 
     tomcatVersion = '7.0.50'
 }
