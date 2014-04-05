@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.Reactor;
 import reactor.event.Event;
+import reactor.spring.context.annotation.Consumer;
 import reactor.spring.context.annotation.Selector;
 
 /**
@@ -30,6 +31,7 @@ import reactor.spring.context.annotation.Selector;
  *
  * @author Patrick Sy (patrick.sy@get-it.us)
  */
+@Consumer
 public class SimpleResponseAcknowledger {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SimpleResponseAcknowledger.class);

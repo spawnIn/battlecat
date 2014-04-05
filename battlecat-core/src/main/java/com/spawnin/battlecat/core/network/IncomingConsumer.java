@@ -19,6 +19,7 @@ import com.spawnin.battlecat.translator.BattlefieldMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.event.Event;
+import reactor.spring.context.annotation.Consumer;
 import reactor.spring.context.annotation.Selector;
 
 /**
@@ -26,6 +27,7 @@ import reactor.spring.context.annotation.Selector;
  *
  * @author Patrick Sy (patrick.sy@get-it.us)
  */
+@Consumer
 public class IncomingConsumer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(IncomingConsumer.class);

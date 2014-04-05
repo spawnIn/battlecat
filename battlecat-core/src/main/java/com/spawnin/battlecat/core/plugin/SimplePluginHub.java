@@ -18,6 +18,7 @@ package com.spawnin.battlecat.core.plugin;
 import com.spawnin.battlecat.translator.BattlefieldMessage;
 import reactor.core.Reactor;
 import reactor.event.Event;
+import reactor.spring.context.annotation.Consumer;
 import reactor.spring.context.annotation.Selector;
 
 /**
@@ -25,6 +26,7 @@ import reactor.spring.context.annotation.Selector;
  *
  * @author Patrick Sy (patrick.sy@get-it.us)
  */
+@Consumer
 public class SimplePluginHub implements PluginHub {
 
     private final Reactor pluginHubReactor;

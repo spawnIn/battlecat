@@ -36,7 +36,7 @@ public class ReactorConfig {
         return Reactors.reactor(env);
     }
 
-
+    @Bean
     public PluginHub pluginHub(Environment env) {
         return new SimplePluginHub(pluginHubReactor(env));
     }
