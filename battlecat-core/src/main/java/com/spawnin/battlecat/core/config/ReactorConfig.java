@@ -31,6 +31,17 @@ import reactor.core.spec.Reactors;
 @Configuration
 public class ReactorConfig {
 
+
+    @Bean
+    public Reactor incomingMessageReactor(Environment env) {
+        return Reactors.reactor(env);
+    }
+
+    @Bean
+    public Reactor outgoingMessageReactor(Environment env) {
+        return Reactors.reactor(env);
+    }
+
     @Bean
     public Reactor pluginHubReactor(Environment env) {
         return Reactors.reactor(env);

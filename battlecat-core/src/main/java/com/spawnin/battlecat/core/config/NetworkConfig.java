@@ -21,6 +21,7 @@ import com.spawnin.battlecat.translator.BattlefieldMessageBuilderFactory;
 import com.spawnin.battlecat.translator.BattlefieldMessageTranslator;
 import com.spawnin.battlecat.translator.bf4.SimpleBf4MessageTranslator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import reactor.core.Environment;
@@ -47,6 +48,14 @@ public class NetworkConfig {
     @Autowired
     private BattlefieldMessageBuilderFactory battlefieldMessageBuilderFactory;
 
+    @Autowired
+    @Qualifier("incomingMessageReactor")
+    private Reactor incomingMessageReactor;
+
+    @Autowired
+    @Qualifier("outgoingMessageReactor")
+    private Reactor outgoingMessageReactor;
+
     @Bean
     public TcpClient<BattlefieldMessage, BattlefieldMessage> serverClient(Environment env) {
 
@@ -71,32 +80,23 @@ public class NetworkConfig {
     public ServerConnectionManager serverConnectionManager(Environment env) {
 
         return new ServerConnectionManager(serverClient(env), null,
-                connectionInitializers(env));
+                connectionInitializers());
 
     }
 
-    @Bean
-    public Reactor incomingMessageReactor(Environment env) {
-        return Reactors.reactor(env);
-    }
 
     @Bean
-    public Reactor outgoingMessageReactor(Environment env) {
-        return Reactors.reactor(env);
-    }
-
-    @Bean
-    public List<ConnectionInitializer> connectionInitializers(Environment env) {
+    public List<ConnectionInitializer> connectionInitializers() {
         List<ConnectionInitializer> connectionInitializers = new ArrayList<>();
 
-        connectionInitializers.add(inputOutputConnectionInitializer(env));
+        connectionInitializers.add(inputOutputConnectionInitializer());
 
         return connectionInitializers;
     }
 
     @Bean
-    public ConnectionInitializer inputOutputConnectionInitializer(Environment env) {
-        return new InputOutputConnectionInitializer(incomingMessageReactor(env), outgoingMessageReactor(env));
+    public ConnectionInitializer inputOutputConnectionInitializer() {
+        return new InputOutputConnectionInitializer(incomingMessageReactor, outgoingMessageReactor);
     }
 
     @Bean
@@ -105,8 +105,8 @@ public class NetworkConfig {
     }
 
     @Bean
-    public SimpleResponseAcknowledger responseAcknowledger(Environment env) {
-        return new SimpleResponseAcknowledger(outgoingMessageReactor(env), battlefieldMessageBuilderFactory);
+    public SimpleResponseAcknowledger responseAcknowledger() {
+        return new SimpleResponseAcknowledger(outgoingMessageReactor, battlefieldMessageBuilderFactory);
     }
 
     @Bean
