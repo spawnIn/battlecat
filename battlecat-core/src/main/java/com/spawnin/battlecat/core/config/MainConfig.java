@@ -30,7 +30,7 @@ import reactor.spring.context.config.EnableReactor;
  */
 @Configuration
 @EnableReactor
-@Import({ReactorConfig.class, NetworkConfig.class})
+@Import({ReactorConfig.class, NetworkConfig.class, PluginConfig.class})
 @PropertySource("classpath:/default-application.properties")
 @PropertySource(value = "classpath:/application.properties", ignoreResourceNotFound = true)
 public class MainConfig {

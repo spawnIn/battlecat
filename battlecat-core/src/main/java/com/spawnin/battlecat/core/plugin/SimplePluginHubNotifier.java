@@ -27,11 +27,11 @@ import reactor.spring.context.annotation.Selector;
  * @author Patrick Sy (patrick.sy@get-it.us)
  */
 @Consumer
-public class SimplePluginHub implements PluginHub {
+public class SimplePluginHubNotifier implements PluginHub {
 
     private final Reactor pluginHubReactor;
 
-    public SimplePluginHub(Reactor pluginHubReactor) {
+    public SimplePluginHubNotifier(Reactor pluginHubReactor) {
         this.pluginHubReactor = pluginHubReactor;
     }
 

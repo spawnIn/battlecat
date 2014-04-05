@@ -17,34 +17,27 @@ package com.spawnin.battlecat.core.config;
 
 import com.spawnin.battlecat.core.plugin.PluginHub;
 import com.spawnin.battlecat.core.plugin.SimplePluginHubNotifier;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import reactor.core.Environment;
 import reactor.core.Reactor;
-import reactor.core.spec.Reactors;
 
 /**
- * Reactor config
+ * Base plugin configuration
  *
  * @author Patrick Sy (patrick.sy@get-it.us)
  */
 @Configuration
-public class ReactorConfig {
+public class PluginConfig {
 
-
-    @Bean
-    public Reactor incomingMessageReactor(Environment env) {
-        return Reactors.reactor(env);
-    }
+    @Autowired
+    @Qualifier("pluginHubReactor")
+    private Reactor pluginHubReactor;
 
     @Bean
-    public Reactor outgoingMessageReactor(Environment env) {
-        return Reactors.reactor(env);
-    }
-
-    @Bean
-    public Reactor pluginHubReactor(Environment env) {
-        return Reactors.reactor(env);
+    public PluginHub pluginHubNotifier() {
+        return new SimplePluginHubNotifier(pluginHubReactor);
     }
 
 }
