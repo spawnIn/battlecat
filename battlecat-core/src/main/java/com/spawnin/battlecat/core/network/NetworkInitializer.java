@@ -28,7 +28,7 @@ import reactor.core.composable.Promise;
 import reactor.event.Event;
 
 /**
- * TODO: Comment
+ * TODO: this is only a test/dev implementation that needs to be revised
  *
  * @author Patrick Sy (patrick.sy@get-it.us)
  */
@@ -49,8 +49,8 @@ public class NetworkInitializer implements ApplicationListener<ContextRefreshedE
         BattlefieldMessage events = factory.getBuilder().setId(12347).setOrigin(OriginType.CLIENT).setType(MessageType.REQUEST).addWord("admin.eventsEnabled").addWord("true").build();
 
 
-        outgoingMessageReactor.notify(Event.wrap(login));
-        outgoingMessageReactor.notify(Event.wrap(events));
-        outgoingMessageReactor.notify(Event.wrap(serverinfo));
+        outgoingMessageReactor.notify("msg", Event.wrap(login));
+        outgoingMessageReactor.notify("msg", Event.wrap(events));
+        outgoingMessageReactor.notify("msg", Event.wrap(serverinfo));
     }
 }
