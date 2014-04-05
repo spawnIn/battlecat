@@ -71,7 +71,7 @@ public class NetworkConfig {
     public ServerConnectionManager serverConnectionManager(Environment env) {
 
         return new ServerConnectionManager(serverClient(env), null,
-                null);
+                connectionInitializers(env));
 
     }
 
