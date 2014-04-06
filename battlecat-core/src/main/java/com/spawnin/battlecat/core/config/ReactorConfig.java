@@ -43,6 +43,11 @@ public class ReactorConfig {
     }
 
     @Bean
+    public Reactor responseReactor(Environment env) {
+        return Reactors.reactor(env);
+    }
+
+    @Bean
     public Reactor pluginHubReactor(Environment env) {
         return Reactors.reactor(env);
     }

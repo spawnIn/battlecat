@@ -26,7 +26,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import reactor.core.Environment;
 import reactor.core.Reactor;
-import reactor.core.spec.Reactors;
 import reactor.net.netty.tcp.NettyTcpClient;
 import reactor.net.tcp.TcpClient;
 import reactor.net.tcp.spec.TcpClientSpec;
@@ -56,6 +55,10 @@ public class NetworkConfig {
     @Qualifier("outgoingMessageReactor")
     private Reactor outgoingMessageReactor;
 
+    @Autowired
+    @Qualifier("responseReactor")
+    private Reactor responseReactor;
+
     @Bean
     public TcpClient<BattlefieldMessage, BattlefieldMessage> serverClient(Environment env) {
 
@@ -84,12 +87,18 @@ public class NetworkConfig {
 
     }
 
+    @Bean
+    public OutgoingConnectionService outgoingConnectionService() {
+        return new SimpleOutgoingConnectionService(outgoingMessageReactor, responseReactor);
+    }
+
 
     @Bean
     public List<ConnectionInitializer> connectionInitializers() {
         List<ConnectionInitializer> connectionInitializers = new ArrayList<>();
 
         connectionInitializers.add(inputOutputConnectionInitializer());
+        connectionInitializers.add((SimpleOutgoingConnectionService)outgoingConnectionService());
 
         return connectionInitializers;
     }
