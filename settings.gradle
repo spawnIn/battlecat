@@ -2,3 +2,5 @@ include "battlecat-core"
 include "battlecat-translator"
 include 'battlecat-webapp'
 
+include 'battlecat-springboot'
+

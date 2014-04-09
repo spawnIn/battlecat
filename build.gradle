@@ -38,6 +38,8 @@ ext {
     reactorVersion = '1.1.0.BUILD-SNAPSHOT'
 
     tomcatVersion = '7.0.50'
+
+    springbootVersion = '1.0.1.RELEASE'
 }
 
 task wrapper(type: Wrapper) {
