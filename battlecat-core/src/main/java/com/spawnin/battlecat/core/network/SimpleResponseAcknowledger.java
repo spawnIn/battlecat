@@ -36,13 +36,14 @@ public class SimpleResponseAcknowledger {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SimpleResponseAcknowledger.class);
 
-    private final Reactor outReactor;
+    private final OutgoingConnectionService outgoingConnectionService;
 
     private final BattlefieldMessageBuilderFactory factory;
 
 
-    public SimpleResponseAcknowledger(Reactor outReactor, BattlefieldMessageBuilderFactory factory) {
-        this.outReactor = outReactor;
+    public SimpleResponseAcknowledger(OutgoingConnectionService outgoingConnectionService,
+                                      BattlefieldMessageBuilderFactory factory) {
+        this.outgoingConnectionService = outgoingConnectionService;
         this.factory = factory;
     }
 
@@ -60,7 +61,7 @@ public class SimpleResponseAcknowledger {
 
             LOGGER.debug("Responding to incoming message {} with {}", message, response);
 
-            outReactor.notify(Event.wrap(response));
+            outgoingConnectionService.send(response);
         }
     }
 

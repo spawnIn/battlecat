@@ -15,7 +15,7 @@
  */
 package com.spawnin.battlecat.core.network;
 
-import com.spawnin.battlecat.translator.BattlefieldMessage;
+import com.spawnin.battlecat.translator.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.net.NetChannel;
@@ -29,14 +29,45 @@ public class PlainLoginConnectionInitializer implements ConnectionInitializer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PlainLoginConnectionInitializer.class);
 
+    private final String password;
+
     private final OutgoingConnectionService outgoingConnectionService;
 
-    public PlainLoginConnectionInitializer(OutgoingConnectionService outgoingConnectionService) {
+    private final BattlefieldMessageBuilderFactory messageBuilderFactory;
+
+    private final MessageIdFactory messageIdFactory;
+
+    public PlainLoginConnectionInitializer(String password, OutgoingConnectionService outgoingConnectionService,
+                                           BattlefieldMessageBuilderFactory messageBuilderFactory,
+                                           MessageIdFactory messageIdFactory) {
+        this.password = password;
         this.outgoingConnectionService = outgoingConnectionService;
+        this.messageBuilderFactory = messageBuilderFactory;
+        this.messageIdFactory = messageIdFactory;
     }
 
     @Override
     public void initialize(NetChannel<BattlefieldMessage, BattlefieldMessage> connection) {
+
+        LOGGER.info("Sending plain login to server");
+
+        BattlefieldMessageBuilder builder = messageBuilderFactory.getBuilder();
+        BattlefieldMessage message = builder.setId(messageIdFactory.nextId()).setType(MessageType.REQUEST)
+                .setOrigin(OriginType.CLIENT).addWord("login.plainText").addWord(password).build();
+
+        outgoingConnectionService.send(message, (event) -> {
+            BattlefieldMessage loginResponse = event.getData();
+
+            if (MessageType.RESPONSE.equals(loginResponse.getType()) && "OK".equals(loginResponse.getWords().get(0))) {
+                LOGGER.info("Login successful, enabling admin events");
+                // enable admin events
+                BattlefieldMessageBuilder adminBuilder = messageBuilderFactory.getBuilder();
+                BattlefieldMessage adminEvents = adminBuilder.setId(messageIdFactory.nextId()).setType(MessageType.REQUEST)
+                        .setOrigin(OriginType.CLIENT).addWord("admin.eventsEnabled").addWord("true").build();
+
+                outgoingConnectionService.send(adminEvents);
+            }
+        });
 
     }
 }

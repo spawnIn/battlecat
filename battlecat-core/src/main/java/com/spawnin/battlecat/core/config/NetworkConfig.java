@@ -101,7 +101,8 @@ public class NetworkConfig {
 
         connectionInitializers.add(messageIdFactoryResetConnectionInitializer());
         connectionInitializers.add(inputOutputConnectionInitializer());
-        connectionInitializers.add((SimpleOutgoingConnectionService)outgoingConnectionService());
+        connectionInitializers.add((SimpleOutgoingConnectionService) outgoingConnectionService());
+        connectionInitializers.add(plainLoginConnectionInitializer());
 
         return connectionInitializers;
     }
@@ -117,16 +118,23 @@ public class NetworkConfig {
     }
 
     @Bean
+    public PlainLoginConnectionInitializer plainLoginConnectionInitializer() {
+        return new PlainLoginConnectionInitializer(
+                springEnv.getRequiredProperty("battlecat.battlefield.server.admin.password"),
+                outgoingConnectionService(), battlefieldMessageBuilderFactory, messageIdFactory);
+    }
+
+    @Bean
     public IncomingConsumer incomingConsumer() {
         return new IncomingConsumer();
     }
 
     @Bean
     public SimpleResponseAcknowledger responseAcknowledger() {
-        return new SimpleResponseAcknowledger(outgoingMessageReactor, battlefieldMessageBuilderFactory);
+        return new SimpleResponseAcknowledger(outgoingConnectionService(), battlefieldMessageBuilderFactory);
     }
 
-    @Bean
+    //@Bean
     public NetworkInitializer networkInitializer() {
         return new NetworkInitializer();
     }

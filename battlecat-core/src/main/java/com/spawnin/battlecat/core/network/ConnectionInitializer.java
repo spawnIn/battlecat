@@ -19,12 +19,19 @@ import com.spawnin.battlecat.translator.BattlefieldMessage;
 import reactor.net.NetChannel;
 
 /**
- * TODO: Comment
+ * ConnectionIitializers are to be executed on (re-)connect to the Battlefield server
  *
  * @author Patrick Sy (patrick.sy@get-it.us)
  */
 public interface ConnectionInitializer {
 
+    /**
+     * Performs initialization tasks on the given new connection
+     * <p>
+     * Using the given {@code connection} is optional and more intended for low level tasks
+     *
+     * @param connection the new connection
+     */
     void initialize(NetChannel<BattlefieldMessage, BattlefieldMessage> connection);
 
 }
