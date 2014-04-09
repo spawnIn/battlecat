@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 import reactor.net.NetChannel;
 
 /**
- * Performs a plain login on connection intializing
+ * Performs a plain login on connection intializing and enables admin events
  *
  * @author Patrick Sy (patrick.sy@get-it.us)
  */
