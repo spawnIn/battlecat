@@ -48,6 +48,9 @@ public class NetworkConfig {
     private BattlefieldMessageBuilderFactory battlefieldMessageBuilderFactory;
 
     @Autowired
+    private MessageIdFactory messageIdFactory;
+
+    @Autowired
     @Qualifier("incomingMessageReactor")
     private Reactor incomingMessageReactor;
 
@@ -92,11 +95,11 @@ public class NetworkConfig {
         return new SimpleOutgoingConnectionService(outgoingMessageReactor, responseReactor);
     }
 
-
     @Bean
     public List<ConnectionInitializer> connectionInitializers() {
         List<ConnectionInitializer> connectionInitializers = new ArrayList<>();
 
+        connectionInitializers.add(messageIdFactoryResetConnectionInitializer());
         connectionInitializers.add(inputOutputConnectionInitializer());
         connectionInitializers.add((SimpleOutgoingConnectionService)outgoingConnectionService());
 
@@ -106,6 +109,11 @@ public class NetworkConfig {
     @Bean
     public ConnectionInitializer inputOutputConnectionInitializer() {
         return new InputOutputConnectionInitializer(incomingMessageReactor, outgoingMessageReactor);
+    }
+
+    @Bean
+    public MessageIdFactoryResetConnectionInitializer messageIdFactoryResetConnectionInitializer() {
+        return new MessageIdFactoryResetConnectionInitializer(messageIdFactory);
     }
 
     @Bean

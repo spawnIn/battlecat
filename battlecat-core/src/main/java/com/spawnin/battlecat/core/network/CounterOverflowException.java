@@ -16,25 +16,13 @@
 package com.spawnin.battlecat.core.network;
 
 /**
- * Factory to create new message ids for messages sent to the server.
- *
- * Implementations must adhere to the sequence number definition of 30 bits
+ * Thrown if the {@link com.spawnin.battlecat.core.network.MessageIdFactory} counter exceeds its max value
  *
  * @author Patrick Sy (patrick.sy@get-it.us)
  */
-public interface MessageIdFactory {
+public class CounterOverflowException extends RuntimeException {
 
-    /**
-     * creates a new id
-     *
-     * @return a new id
-     * @throws com.spawnin.battlecat.core.network.CounterOverflowException if the counter exceeds its max value
-     */
-    int nextId();
-
-    /**
-     * resets the Factory for a new connection with the server
-     */
-    void reset();
-
+    public CounterOverflowException(String message) {
+        super(message);
+    }
 }

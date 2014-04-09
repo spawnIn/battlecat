@@ -15,6 +15,8 @@
  */
 package com.spawnin.battlecat.core.config;
 
+import com.spawnin.battlecat.core.network.AtomicIntegerMessageIdFactory;
+import com.spawnin.battlecat.core.network.MessageIdFactory;
 import com.spawnin.battlecat.translator.BattlefieldMessageBuilderFactory;
 import com.spawnin.battlecat.translator.SimpleBattleFieldMessageBuilderFactory;
 import org.springframework.context.annotation.Bean;
@@ -38,6 +40,11 @@ public class MainConfig {
     @Bean
     public BattlefieldMessageBuilderFactory battlefieldMessageBuilderFactory() {
         return new SimpleBattleFieldMessageBuilderFactory();
+    }
+
+    @Bean
+    public MessageIdFactory messageIdFactory() {
+        return new AtomicIntegerMessageIdFactory(4000);
     }
 
 }

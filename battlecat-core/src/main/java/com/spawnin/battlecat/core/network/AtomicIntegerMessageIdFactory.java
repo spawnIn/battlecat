@@ -15,6 +15,9 @@
  */
 package com.spawnin.battlecat.core.network;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -24,19 +27,40 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class AtomicIntegerMessageIdFactory implements MessageIdFactory {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(AtomicIntegerMessageIdFactory.class);
+
+    private static final int MAX_VALUE = 1073741824;
+
     private final AtomicInteger idCounter;
+    private final int seed;
 
     /**
      *
      * @param seed seed to start the counter off
      */
     public AtomicIntegerMessageIdFactory(int seed) {
+        this.seed = seed;
         this.idCounter = new AtomicInteger(seed);
     }
 
     @Override
     public int nextId() {
-        // TODO trigger roll over / reconnect
-        return idCounter.incrementAndGet();
+        int newId = idCounter.incrementAndGet();
+
+        if (newId >= 1073741824) {
+            throw new CounterOverflowException("Counter exceeded max value of " + MAX_VALUE + ". " +
+                    "The connection needs to be restarted");
+        }
+
+        LOGGER.debug("Generated new id {}", newId);
+
+        return newId;
+    }
+
+    @Override
+    public void reset() {
+        LOGGER.debug("Resetting counter to original seed {}", seed);
+
+        idCounter.set(seed);
     }
 }
