@@ -50,9 +50,7 @@ public class ServerConnectionManager {
 
     public void connect() {
 
-        Stream<NetChannel<BattlefieldMessage, BattlefieldMessage>> connections = tcpClient.open((address, attempt) -> {
-            return Tuple.of(address, 8080L);
-        });
+        Stream<NetChannel<BattlefieldMessage, BattlefieldMessage>> connections = tcpClient.open(reconnectStrategy);
 
         connections.consume(connection -> {
             LOGGER.debug("Initializing new connection {}", connection);

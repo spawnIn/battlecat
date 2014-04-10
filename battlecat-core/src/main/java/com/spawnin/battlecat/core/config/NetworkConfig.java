@@ -26,12 +26,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import reactor.core.Environment;
 import reactor.core.Reactor;
+import reactor.net.Reconnect;
 import reactor.net.netty.tcp.NettyTcpClient;
 import reactor.net.tcp.TcpClient;
 import reactor.net.tcp.spec.TcpClientSpec;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Spring JavaConfig for networking related objects and components
@@ -85,9 +87,21 @@ public class NetworkConfig {
     @Bean(initMethod = "connect")
     public ServerConnectionManager serverConnectionManager(Environment env) {
 
-        return new ServerConnectionManager(serverClient(env), null,
+        return new ServerConnectionManager(serverClient(env), reconnect(),
                 connectionInitializers());
 
+    }
+
+    @Bean
+    public Reconnect reconnect() {
+
+        List<Long> retries = new ArrayList<Long>(){{
+            add(TimeUnit.SECONDS.toMillis(10));
+            add(TimeUnit.SECONDS.toMillis(30));
+            add(TimeUnit.MINUTES.toMillis(1));
+        }};
+
+        return new ListRepeatReconnect(retries);
     }
 
     @Bean
