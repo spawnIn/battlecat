@@ -50,6 +50,8 @@ public class ServerConnectionManager {
 
     public void connect() {
 
+        LOGGER.info("Connecting to server");
+
         Stream<NetChannel<BattlefieldMessage, BattlefieldMessage>> connections = tcpClient.open(reconnectStrategy);
 
         connections.consume(connection -> {
@@ -65,5 +67,11 @@ public class ServerConnectionManager {
         });
 
 
+    }
+
+    public void disconnect() {
+        LOGGER.info("Disonnecting from server");
+
+        tcpClient.close();
     }
 }

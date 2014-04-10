@@ -84,7 +84,7 @@ public class NetworkConfig {
         return new SimpleBf4MessageTranslator(battlefieldMessageBuilderFactory);
     }
 
-    @Bean(initMethod = "connect")
+    @Bean(initMethod = "connect", destroyMethod = "disconnect")
     public ServerConnectionManager serverConnectionManager(Environment env) {
 
         return new ServerConnectionManager(serverClient(env), reconnect(),
