@@ -148,10 +148,4 @@ public class NetworkConfig {
         return new SimpleResponseAcknowledger(outgoingConnectionService(), battlefieldMessageBuilderFactory);
     }
 
-    //@Bean
-    public NetworkInitializer networkInitializer() {
-        return new NetworkInitializer();
-    }
-
-
 }
