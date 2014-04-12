@@ -27,6 +27,6 @@ import reactor.function.Consumer;
 public interface OnResponse extends Consumer<Event<BattlefieldMessage>> {
 
     @Override
-    void accept(Event<BattlefieldMessage> message);
+    void accept(Event<BattlefieldMessage> event);
 
 }
