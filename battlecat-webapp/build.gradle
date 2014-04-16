@@ -6,6 +6,7 @@ apply plugin: 'tomcat'
 dependencies {
 
     compile project(':battlecat-core')
+    compile project(':battlecat-empty-cycle-plugin')
 
     compile group: 'org.springframework', name: 'spring-webmvc', version: springVersion
 
