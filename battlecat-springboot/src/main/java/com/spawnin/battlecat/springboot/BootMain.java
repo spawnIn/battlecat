@@ -21,16 +21,16 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
- * TODO: Comment
+ * Boot main class
  *
  * @author Patrick Sy (patrick.sy@get-it.us)
  */
 @ComponentScan(basePackages = "com.spawnin.battlecat.webapp")
 @EnableAutoConfiguration
-public class BootApplication {
+public class BootMain {
 
     public static void main(String[] args) {
-        SpringApplication.run(new Object[]{BootApplication.class, MainConfig.class}, args);
+        SpringApplication.run(new Object[]{BootMain.class, MainConfig.class}, args);
     }
 
 }
