@@ -1,11 +1,9 @@
 include "battlecat-core"
 include "battlecat-translator"
 include 'battlecat-webapp'
+include 'battlecat-springboot'
 include 'battlecat-bf4'
 include 'battlecat-plugins'
 
 include 'battlecat-plugins/battlecat-empty-cycle-plugin'
 rootProject.children.find { it.name == 'battlecat-plugins/battlecat-empty-cycle-plugin' }.name = 'battlecat-empty-cycle-plugin'
-
-include 'battlecat-springboot'
-
