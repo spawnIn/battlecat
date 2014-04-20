@@ -1,0 +1,19 @@
+apply plugin: 'spring-boot'
+
+
+buildscript {
+    repositories {
+        maven { url "http://repo.spring.io/libs-milestone" }
+        mavenLocal()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:$springbootVersion")
+    }
+}
+
+dependencies {
+
+    compile project(':battlecat-webapp')
+
+    compile("org.springframework.boot:spring-boot-starter-web")
+}
