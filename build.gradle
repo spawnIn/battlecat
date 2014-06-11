@@ -33,13 +33,13 @@ subprojects {
 }
 
 ext {
-    springVersion = '4.0.4.RELEASE'
+    springVersion = '4.0.5.RELEASE'
 
-    reactorVersion = '1.1.0.RELEASE'
+    reactorVersion = '1.1.2.RELEASE'
 
     tomcatVersion = '7.0.52'
 
-    springbootVersion = '1.0.2.RELEASE'
+    springbootVersion = '1.1.1.RELEASE'
 }
 
 task wrapper(type: Wrapper) {
