@@ -37,8 +37,6 @@ ext {
 
     reactorVersion = '1.1.3.RELEASE'
 
-    tomcatVersion = '7.0.52'
-
     springbootVersion = '1.1.4.RELEASE'
 }
 
